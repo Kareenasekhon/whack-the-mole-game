@@ -1,0 +1,252 @@
+body {
+  background: linear-gradient(135deg, #000000, #008080, #00008B);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+.game-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  transform: scale(1);
+  transition: transform 0.3s;
+  width: 80vw;
+  max-width: 500px;
+  height: auto;
+  margin: 20px auto;
+}
+
+.game-container:hover {
+  transform: scale(1.02);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(60px, 80px));
+  gap: 8px;
+  margin: 10px auto;
+  padding: 8px;
+  background: rgba(0, 139, 139, 0.1);
+  border-radius: 15px;
+  justify-content: center;
+}
+
+.hole {
+  width: 100%;
+  height: 80px;
+  background: linear-gradient(145deg, #2c2c2c, #404040);
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: inset 0 -8px 15px rgba(0,0,0,0.4);
+  transition: transform 0.2s;
+}
+
+.hole:hover {
+  transform: scale(1.05);
+}
+
+/* Updated mole styles with lighter, more attractive colors */
+.mole {
+  width: 90%;
+  height: 90%;
+  background: linear-gradient(145deg, #FF9999, #FFB366); /* Lighter peachy color */
+  border-radius: 50%;
+  position: absolute;
+  bottom: 100%;
+  left: 5%;
+  transition: bottom 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Enhanced mole features with cuter appearance */
+.mole::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 15%;
+  width: 70%;
+  height: 45%;
+  background: linear-gradient(145deg, #FFB366, #FFCC99); /* Lighter highlight */
+  border-radius: 50% 50% 45% 45%;
+  box-shadow: inset 0 3px 5px rgba(255,255,255,0.5);
+}
+
+/* Eyes */
+.mole::after {
+  content: '';
+  position: absolute;
+  top: 35%;
+  width: 15%;
+  height: 15%;
+  background: #9c0909;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+}
+
+.mole::after {
+  left: 28%;
+}
+
+.mole::before {
+  content: '';
+  right: 28%;
+  background: #333;
+  width: 15%;
+  height: 15%;
+  top: 35%;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.4);
+  z-index: 2;
+}
+
+/* Rosy cheeks */
+.mole::after {
+  content: '';
+  position: absolute;
+  top: 45%;
+  left: 45%;
+  width: 10%;
+  height: 8%;
+  background: #FF6B6B;
+  border-radius: 50%;
+  box-shadow: -25px 0 15px #FF6B6B, 25px 0 15px #FF6B6B;
+  opacity: 0.6;
+}
+
+.mole.active {
+  bottom: 5%;
+  animation: wobble 0.3s ease-in-out;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-5deg) scale(1.05); }
+  75% { transform: rotate(5deg) scale(1.05); }
+}
+
+/* Rest of the styles remain the same */
+button {
+  background: linear-gradient(145deg, #009B9B, #008080);
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.start-btn {
+  background: linear-gradient(145deg, #4CAF50, #45a049);
+  font-size: 20px;
+  padding: 12px 30px;
+  margin: 15px;
+}
+
+button:hover {
+  background: linear-gradient(145deg, #007B7B, #006060);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+
+.start-btn:hover {
+  background: linear-gradient(145deg, #45a049, #3d8b40);
+}
+
+.score {
+  font-size: 18px;
+  color: #00008B;
+  margin: 8px;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+.game-over {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  color: white;
+  padding: 30px 40px;
+  border-radius: 25px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  animation: popIn 0.5s cubic-bezier(0.26, 1.32, 0.55, 1.2);
+  border: 2px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  min-width: 300px;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+}
+
+h1 {
+  background: linear-gradient(135deg, #000000, #008080, #00008B);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.3em;
+  margin: 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.game-over h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  background: linear-gradient(145deg, #00ff87, #60efff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.game-over p {
+  font-size: 1.4em;
+  margin: 15px 0;
+  font-weight: bold;
+  color: #60efff;
+}
+
+.game-over button {
+  background: linear-gradient(145deg, #00ff87, #60efff);
+  color: #1a1a2e;
+  font-size: 1.2em;
+  padding: 12px 35px;
+  margin-top: 20px;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.game-over button:hover {
+  background: linear-gradient(145deg, #60efff, #00ff87);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(96,239,255,0.4);
+}
